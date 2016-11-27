@@ -1,1 +1,34 @@
+2016 11 26
+search 找到所有方案
+clone graph
+vertex edge structure
+>vertex
+>edge
+1 node -> nodes
+2 nodes -> new nodes
+3 neighbours -> new neighbours
 
+1 BFS
+--1)queue
+--2)hashmap
+
+Topology sort
+N tasks
+A->B
+B->C
+C->D
+
+A->B-C-D
+G = (V, E) // Directed Graph
+求一个合理完成任务顺序-> Topologic Order
+
+0. 问是否可以拓扑排序，不能有环状结构 A->B->C->A
+1. 求他的一个拓扑序
+
+indegree A->B B的入度+1
+outdegree A->B A的出度+1
+
+1.找到所有入度为0的点，放到队列了
+2.遍历队列
+  从队列里拿出一个点，将这个点所有block的点入度都-1
+  如果发现某个点入度变成了0，就加入队列
