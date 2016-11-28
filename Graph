@@ -1,6 +1,9 @@
 2016 11 26
 search 找到所有方案
 clone graph
+HashMap来解决clone问题
+HashMap优点搜索O(1),缺点space complexity O(n)
+
 vertex edge structure
 >vertex
 >edge
@@ -8,9 +11,10 @@ vertex edge structure
 2 nodes -> new nodes
 3 neighbours -> new neighbours
 
+
 1 BFS
---1)queue
---2)hashmap
+--1)queue 遍历点的顺序
+--2)hashmap 避免点的重复 
 
 Topology sort
 N tasks
@@ -32,3 +36,46 @@ outdegree A->B A的出度+1
 2.遍历队列
   从队列里拿出一个点，将这个点所有block的点入度都-1
   如果发现某个点入度变成了0，就加入队列
+  
+//Topology Sort
+
+//Initialize incount
+for (int i = 0; i < nodes.size(); i++){
+  incount.put(nodes.get(i), 0);
+}
+
+//construct incount
+for (int i = 0; i < nodes.size(); i++) {
+  for ( int j = 0; j < nodes.get(i).block.size(); j++){
+  GraphNode blockedNode = nodes.get(i).block.get(j);
+  incount.put(blockedNode, incount.get(blockedNode) + 1);
+  }
+}
+
+Queue<GraphNode> Q = new LinkedList<GraphNode>();
+for (int i = 0; i < nodes.size(); i++) {
+  if(incount.get(nodes.get(i)) == 0){
+    Q.offer(nodes.get(i));
+  }
+}
+//bfs
+ArrayList<GraphNode> topoList = new ArrayList<GraphNode>();
+while(!Q.isEmpty()){
+  GraphNode node = Q.poll();
+  topoList.add(node);
+  for (int i = 0; i < node.block.size(); i++) {
+    GraphNode blockedNode = node.block.get(i);
+    incount.put(blockedNode, incount.get(blockedNode) - 1);
+    if (incount.get(blockedNode) == 0){
+      Q.offer(blockedNode);
+    }
+  }
+}
+
+if(topoList.size() == nodes.size()){
+  return topoList;
+} else {
+  return null;
+}
+
+
