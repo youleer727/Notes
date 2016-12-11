@@ -20,7 +20,7 @@ public class Solution {
       }
       list.add(nums[i]);
       visited[i] = true;
-      helper(rst, list, nums,);
+      helper(rst, list, nums, visited);
       list.remove(list.size() - 1);
       visited[i] = false;
     }
