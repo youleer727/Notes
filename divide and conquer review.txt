@@ -1,0 +1,4 @@
+divide and conquer
+/*先divide再conquer，
+*每次传回需要迭代的值。
+*/
